@@ -80,7 +80,7 @@ You can `Fields` option when you need to add custom message or if you need to se
         fields: [
             {
                 element: "username",
-                message: "Username can not be empty"
+                message: "Username can not be empty",
                 set: "#custom-element",
             },
             {
@@ -153,7 +153,7 @@ Form("#form").validate({
         fields: [
             {
                 element: "username",
-                message: "Username can not be empty"
+                message: "Username can not be empty",
                 set: "#custom-element",
             },
             {
@@ -167,7 +167,7 @@ Form("#form").validate({
             },
             element: "username",
             message: "Custom message",
-            set: ".class-name",
+            set: ".class-name"
         },
     },
 });
