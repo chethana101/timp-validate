@@ -1,6 +1,6 @@
 {
   "name": "timp-validate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "HTML form validator",
   "main": "timp-validate.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tiger5553/easy-validate.git"
+    "url": "git+https://github.com/chethana101/timp-validate"
   },
   "keywords": [
     "Validate"
@@ -16,7 +16,7 @@
   "author": "TigerMP",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tiger5553/easy-validate/issues"
+    "url": "https://github.com/chethana101/timp-validate/issues"
   },
-  "homepage": "https://github.com/tiger5553/easy-validate#readme"
+  "homepage": "https://github.com/chethana101/timp-validate#readme"
 }
