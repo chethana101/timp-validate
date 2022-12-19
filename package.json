@@ -1,8 +1,8 @@
 {
   "name": "timp-validate",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "HTML form validator",
-  "main": "timp-validate.js",
+  "main": "timp-validate.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,12 @@
     "url": "git+https://github.com/chethana101/timp-validate"
   },
   "keywords": [
-    "Validate"
+    "validate",
+    "html form validate",
+    "validator",
+    "js validator",
+    "validator",
+    "form"
   ],
   "author": "TigerMP",
   "license": "ISC",
