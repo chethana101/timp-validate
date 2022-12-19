@@ -1,3 +1,7 @@
+let formInt = new Form();
+formInt.setValidateRule();
+formInt.redirectWhenValid();
+
 function Form(attr) {
   var data = {};
   data.error = 0;
@@ -215,10 +219,8 @@ function Form(attr) {
       ),
     };
 
-    for (key in message) {
-      if (type == key) {
-        return message[key];
-      }
+    if (message[type]) {
+      return message[type];
     }
 
     if (requiredData?.message) {
@@ -572,9 +574,5 @@ function Form(attr) {
 
   return data;
 }
-
-let formInt = new Form();
-formInt.setValidateRule();
-formInt.redirectWhenValid();
 
 module.exports = Form;
