@@ -208,23 +208,24 @@ Form("#form").validate({
 ```js
 new Form().init({
     errorElement: "span", // Element type
+    elementStyle: "error-class", // Error label custom style class (Do not add the full stop mark `.`)
     parentClass: ".field-box-main" // Error label set append to this class
 });
 ```
 
-Using this option you can customize your error label behaviors and actions. For the `errorElement` you can pass tag names such as `span`, `label`, `p` etc. If you set the `parentClass` parameter the error label append to that class. `Ex:`
+Using this option you can customize your error label behaviors and actions. For the `errorElement` you can pass tag names such as `span`, `label`, `p` etc. If you want to add custom styles to the error label you can use `elementStyle` parameter. For that you can pass the css class name without full stop mark. And also if you set the `parentClass` parameter the error label append to that class. `Ex:`
 
 ```html
 <form action="" method="POST" id="form" data-validate="true">
     <div class="field-box-main"> // Parent element
         <label class="label">Username</label>
         <input type="text" placeholder="Username" name="username" required>
-        <span>Error<span/> // Error append here
+        <span class="error-class">Error<span/> // Error append here
     </div>
     <div class="field-box-main"> // Parent element
         <label class="label">Password</label>
         <input type="password" placeholder="Password" name="password" required>
-        <span>Error<span/> // Error append here
+        <span class="error-class">Error<span/> // Error append here
     </div>
     <input type="submit" value="Submit" name="login">
 </form>
