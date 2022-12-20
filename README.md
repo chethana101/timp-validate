@@ -1,7 +1,7 @@
 <div align="center">
   <img width="200" height="200"
     src="https://github.com/chethana101/timp-validate/blob/main/resources/images/timp-Logo.png">
-  <h1>Timp Validate</h1>
+  <h1>Timp Validate (Beta)</h1>
   <p>JavaScript Form Validator</p>
   <p>timp-validate is a library for html form validation written entirely in JavaScript, with zero native dependencies.</p>
 </div>
@@ -10,7 +10,9 @@
 
 For install this package you can use below npm command.
 
-`npm install timp-validate`
+```sh
+npm install timp-validate
+```
 
 or inline
 
@@ -152,18 +154,18 @@ Form("#form").validate({
     rules: {
         fields: [
             {
-                element: "username",
+                element: "username", // Input field name
                 message: "Username can not be empty",
                 set: "#custom-element",
             },
             {
-                element: "password",
+                element: "password", // Input field name
                 message: "Password can not be empty"
             },
         ],
         customFunctionName: {
-            method: function (element) {
-                return false;
+            method: function (element) { // function
+                return true; // return true or false
             },
             element: "username",
             message: "Custom message",
@@ -172,3 +174,7 @@ Form("#form").validate({
     },
 });
 ```
+
+Using this option you can write your own code to validate the forms. For that, you can pass 4 parameters which are `method`, `element`, `message`, and `set`. From those parameters ` method` and `element` are required. For the `method` parameter you need to assign a function and inside the function, you can write your code. The important thing is as a return value you should need to pass `true` or `false` otherwise validator can't recognize the value. If you are returning the `true` it means validation success and `false` means validation failed.
+
+### Custom functions
