@@ -9,6 +9,7 @@
           }
           return factory(w);
         };
+        module.exports = Form;
   } else {
     factory(global);
   }
@@ -590,12 +591,9 @@
       return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
     };
 
+    data.setValidateRule();
+    data.redirectWhenValid();
+
     return data;
   };
 });
-
-let formInt = new Form();
-formInt.setValidateRule();
-formInt.redirectWhenValid();
-
-module.exports = Form;
