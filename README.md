@@ -121,7 +121,7 @@ This option also has 3 attributes which are `element`, `message`, `set`. The `el
 
 ### length
 
-You can you this option to check value lengths and character lengths using logic.
+You can use this option to check value lengths and character lengths using logic.
 
 ```js
 Form("#form").validate({
@@ -209,7 +209,8 @@ Form("#form").validate({
 new Form().init({
     errorElement: "span", // Element type
     elementStyle: "error-class", // Error label custom style class (Do not add the full stop mark `.`)
-    parentClass: ".field-box-main" // Error label set append to this class
+    parentClass: ".field-box-main", // Error label append to this class
+    focusOutValidate: true // On focus out validation in fields
 });
 ```
 
@@ -230,6 +231,8 @@ Using this option you can customize your error label behaviors and actions. For 
     <input type="submit" value="Submit" name="login">
 </form>
 ```
+
+`focusOutValidate` parameter is used to validate fields when `focusout` event executes.
 
 ### All Options
 
