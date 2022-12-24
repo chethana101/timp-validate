@@ -3,7 +3,7 @@
  | Validate Main Function
  |---------------------------------------------------------------------
  */
-(function (global, factory) {
+ (function (global, factory) {
   "use strict";
   if (typeof module === "object" && typeof module.exports === "object") {
     module.exports = global.document
@@ -52,6 +52,10 @@
       option?.elementStyle
         ? localStorage.setItem("elementStyle", option.elementStyle)
         : localStorage.removeItem("elementStyle");
+      // If on foucs out validation set
+      option?.focusOutValidate
+        ? localStorage.setItem("focusOutValidate", option.focusOutValidate)
+        : localStorage.removeItem("focusOutValidate");
     };
 
     /*
@@ -61,6 +65,7 @@
      */
     data.validate = function (options = null) {
       try {
+        data.options = options;
         let forms = document.querySelectorAll('[data-validate="true"]');
         if (forms) {
           forms.forEach((form) => {
@@ -96,10 +101,17 @@
      * Validate start function
      *-----------------------------------------
      */
-    data.onValidate = function (option = null) {
+    data.onValidate = function (option = null, singleElement = null) {
       data.error = 0;
       data.optionCheck = [];
-      let elements = data.forms;
+      let elements = null;
+
+      // If any on focus out element
+      if (singleElement) {
+        elements = [singleElement];
+      } else {
+        elements = data.forms;
+      }
       // Basic validation
       elements.forEach((element) => {
         let setTo = null;
@@ -174,6 +186,23 @@
 
     /*
      *-----------------------------------------
+     * Validate on focus out
+     *-----------------------------------------
+     */
+    data.onFocusOut = function () {
+      // Check if on focus out validation on
+      if (localStorage.getItem("focusOutValidate")) {
+        let requiredFields = data.forms;
+        requiredFields.forEach((field) => {
+          field.addEventListener("focusout", () => {
+            this.onValidate(data.options, field);
+          });
+        });
+      }
+    };
+
+    /*
+     *-----------------------------------------
      * Pass data to necessary function
      *-----------------------------------------
      */
@@ -211,6 +240,8 @@
           return this.checkBoxValidate(element);
         case "radio":
           return this.radioButtonValidate(element);
+        case "date":
+          return this.dateValidate(element);
       }
     };
 
@@ -276,7 +307,7 @@
      * Get relavent error message
      *-----------------------------------------
      */
-    data.getError = function (type = null, requiredData) {
+    data.getError = function (type = null, requiredData, element = null) {
       let message = {
         required: "This field is required",
         email: "Please enter a valid email address",
@@ -287,6 +318,7 @@
         number: "Number field is required",
         password: "Password field is required",
         equalTo: "Please enter the same value again",
+        fileType: this.format("Invalid file type {0}", requiredData),
         max: this.format(
           "Please enter a value less than or equal to {0}",
           requiredData
@@ -322,8 +354,12 @@
       if (type == null) {
         return message.required;
       } else {
-        // Return custom message
-        return type;
+        // Check if custom message or return default message
+        if (element.type == type) {
+          return message.required;
+        } else {
+          return type;
+        }
       }
     };
 
@@ -365,8 +401,8 @@
 
       // Set the error message
       let label = this.getLabel(element);
-      label.innerText = this.getError(option.message, requiredData);
-
+      label.innerText = this.getError(option.message, requiredData, element);
+      
       // Add label to the field box
       parent.appendChild(label);
       // Remove error message if requested
@@ -391,12 +427,12 @@
      */
     data.getLabel = function (field) {
       let errorStyles = `
-          .form-error { 
-              font-size: 14px;
-              font-weight: 500;
-              color: #FF0000;
-          }
-      `;
+            .form-error { 
+                font-size: 14px;
+                font-weight: 500;
+                color: #FF0000;
+            }
+        `;
 
       if (
         document.querySelectorAll('[data-form-error-style="true"]')[0] ==
@@ -429,13 +465,13 @@
     };
 
     /*
-  |--------------------------------------------------------------------------
-  | ☢️ API Functions | Validation 
-  |--------------------------------------------------------------------------
-  |
-  | Here is where api method validate before it's execute
-  |
-  */
+    |--------------------------------------------------------------------------
+    | ☢️ API Functions | Validation 
+    |--------------------------------------------------------------------------
+    |
+    | Here is where api method validate before it's execute
+    |
+    */
     /*
      *-----------------------------------------
      * Verify methods
@@ -541,10 +577,10 @@
     };
 
     /*
-  |--------------------------------------------------------------------------
-  | Validate functions
-  |--------------------------------------------------------------------------
-  */
+    |--------------------------------------------------------------------------
+    | Validate functions
+    |--------------------------------------------------------------------------
+    */
 
     /*
      *-----------------------------------------
@@ -776,13 +812,23 @@
     };
 
     /*
-      |---------------------------------------------------------------------
-      | Set common attributes
-      |---------------------------------------------------------------------
-      */
+     *-----------------------------------------
+     * Date validation
+     *-----------------------------------------
+     */
+    data.dateValidate = function (element) {
+      return Date.parse(element.value);
+    };
+
+    /*
+    |---------------------------------------------------------------------
+    | Set common attributes
+    |---------------------------------------------------------------------
+    */
     data.setValidateRule();
     data.redirectWhenValid();
+    data.forms ? data.onFocusOut() : null;
 
     return data;
   };
-});
+})
