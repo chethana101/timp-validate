@@ -3,7 +3,7 @@
  | Validate Main Function
  |---------------------------------------------------------------------
  */
- (function (global, factory) {
+(function (global, factory) {
   "use strict";
   if (typeof module === "object" && typeof module.exports === "object") {
     module.exports = global.document
@@ -26,11 +26,15 @@
     // Check attribute type
     if (attr != null) {
       if (typeof attr === "string") {
-        data.forms = document
-          .querySelector(attr)
-          .querySelectorAll("[required]");
+        if (document.querySelector(attr).querySelectorAll("[required]")) {
+          data.forms = document
+            .querySelector(attr)
+            .querySelectorAll("[required]");
+        }
       } else {
-        data.forms = attr.querySelectorAll("[required]");
+        if (attr.querySelectorAll("[required]")) {
+          data.forms = attr.querySelectorAll("[required]");
+        }
       }
     }
 
@@ -402,7 +406,7 @@
       // Set the error message
       let label = this.getLabel(element);
       label.innerText = this.getError(option.message, requiredData, element);
-      
+
       // Add label to the field box
       parent.appendChild(label);
       // Remove error message if requested
@@ -831,4 +835,4 @@
 
     return data;
   };
-})
+});
