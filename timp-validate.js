@@ -26,11 +26,19 @@
     // Check attribute type
     if (attr != null) {
       if (typeof attr === "string") {
-        data.forms = document
-          .querySelector(attr)
-          .querySelectorAll("[required]");
+        if (
+          document.body.contains(
+            document.querySelector(attr)
+          )
+        ) {
+          data.forms = document
+            .querySelector(attr)
+            .querySelectorAll("[required]");
+        }
       } else {
-        data.forms = attr.querySelectorAll("[required]");
+        if (document.body.contains(attr)) {
+          data.forms = attr.querySelectorAll("[required]");
+        }
       }
     }
 
@@ -402,7 +410,7 @@
       // Set the error message
       let label = this.getLabel(element);
       label.innerText = this.getError(option.message, requiredData, element);
-      
+
       // Add label to the field box
       parent.appendChild(label);
       // Remove error message if requested
@@ -559,20 +567,26 @@
      *-----------------------------------------
      */
     data.redirectWhenValid = function () {
-      let forms = document.querySelectorAll('[data-validate="all"]');
-      if (forms) {
-        forms.forEach((form) => {
-          form.addEventListener("submit", (e) => {
-            e.preventDefault();
+      if (
+        document.body.contains(
+          document.querySelectorAll('[data-validate="all"]')[0]
+        )
+      ) {
+        let forms = document.querySelectorAll('[data-validate="all"]');
+        if (forms) {
+          forms.forEach((form) => {
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
 
-            data.forms = form.querySelectorAll("[required]");
-            this.onValidate();
+              data.forms = form.querySelectorAll("[required]");
+              this.onValidate();
 
-            if (data.error == 0) {
-              form.submit();
-            }
+              if (data.error == 0) {
+                form.submit();
+              }
+            });
           });
-        });
+        }
       }
     };
 
@@ -831,4 +845,4 @@
 
     return data;
   };
-})
+});
