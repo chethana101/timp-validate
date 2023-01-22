@@ -3,7 +3,7 @@
  | Validate Main Function
  |---------------------------------------------------------------------
  */
-(function (global, factory) {
+ (function (global, factory) {
   "use strict";
   if (typeof module === "object" && typeof module.exports === "object") {
     module.exports = global.document
@@ -26,13 +26,17 @@
     // Check attribute type
     if (attr != null) {
       if (typeof attr === "string") {
-        if (document.querySelector(attr).querySelectorAll("[required]")) {
+        if (
+          document.body.contains(
+            document.querySelector(attr)
+          )
+        ) {
           data.forms = document
             .querySelector(attr)
             .querySelectorAll("[required]");
         }
       } else {
-        if (attr.querySelectorAll("[required]")) {
+        if (document.body.contains(attr)) {
           data.forms = attr.querySelectorAll("[required]");
         }
       }
@@ -563,20 +567,26 @@
      *-----------------------------------------
      */
     data.redirectWhenValid = function () {
-      let forms = document.querySelectorAll('[data-validate="all"]');
-      if (forms) {
-        forms.forEach((form) => {
-          form.addEventListener("submit", (e) => {
-            e.preventDefault();
+      if (
+        document.body.contains(
+          document.querySelectorAll('[data-validate="all"]')[0]
+        )
+      ) {
+        let forms = document.querySelectorAll('[data-validate="all"]');
+        if (forms) {
+          forms.forEach((form) => {
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
 
-            data.forms = form.querySelectorAll("[required]");
-            this.onValidate();
+              data.forms = form.querySelectorAll("[required]");
+              this.onValidate();
 
-            if (data.error == 0) {
-              form.submit();
-            }
+              if (data.error == 0) {
+                form.submit();
+              }
+            });
           });
-        });
+        }
       }
     };
 
