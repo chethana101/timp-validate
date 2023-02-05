@@ -104,7 +104,7 @@ Form("#form").validate({
     rules: {
         equalTo: [
             {
-                equalTo: ["password", "re_password"], // Input field names
+                element: ["password", "re_password"], // Input field names
                 message: "Custom message",
                 set: "#custom-element"
             },
