@@ -26,11 +26,7 @@
     // Check attribute type
     if (attr != null) {
       if (typeof attr === "string") {
-        if (
-          document.body.contains(
-            document.querySelector(attr)
-          )
-        ) {
+        if (document.body.contains(document.querySelector(attr))) {
           data.forms = document
             .querySelector(attr)
             .querySelectorAll("[required]");
@@ -95,7 +91,12 @@
                   isTrue(data.optionCheck) &&
                   data.error == 0
                 ) {
-                  options.onSubmit(document.querySelector(attr), event);
+                  options.onSubmit(
+                    typeof attr === "string"
+                      ? document.querySelector(attr)
+                      : attr,
+                    event
+                  );
                 }
               }
             });
@@ -383,6 +384,9 @@
         (option && option.set == undefined) ||
         (option && option.set == null)
       ) {
+        if (element == undefined) {
+          throw new Error("Element not found");
+        }
         parent = element.parentElement;
         // Check if any parent class sent by user
         if (localStorage.getItem("parentClass")) {
@@ -403,8 +407,10 @@
           '[data-error-id="' + element.name + "-error" + '"]'
         )[0]
       ) {
-        document.getElementById(element.name + "-error").remove();
-        element.removeAttribute("data-error-id");
+        if (document.getElementById(element.name + "-error")) {
+          document.getElementById(element.name + "-error").remove();
+          element.removeAttribute("data-error-id");
+        }
       }
 
       // Set the error message
@@ -413,6 +419,10 @@
 
       // Add label to the field box
       parent.appendChild(label);
+      // If element exist set foucs
+      if (data.error != 0) {
+        element.focus();
+      }
       // Remove error message if requested
       if (option && option.remove) {
         if (
@@ -420,8 +430,10 @@
             '[data-error-id="' + element.name + "-error" + '"]'
           )[0]
         ) {
-          document.getElementById(element.name + "-error").remove();
-          element.removeAttribute("data-error-id");
+          if (document.getElementById(element.name + "-error")) {
+            document.getElementById(element.name + "-error").remove();
+            element.removeAttribute("data-error-id");
+          }
         }
       }
     };
@@ -435,12 +447,12 @@
      */
     data.getLabel = function (field) {
       let errorStyles = `
-            .form-error { 
-                font-size: 14px;
-                font-weight: 500;
-                color: #FF0000;
-            }
-        `;
+              .form-error { 
+                  font-size: 14px;
+                  font-weight: 500;
+                  color: #FF0000;
+              }
+          `;
 
       if (
         document.querySelectorAll('[data-form-error-style="true"]')[0] ==
@@ -473,13 +485,13 @@
     };
 
     /*
-    |--------------------------------------------------------------------------
-    | ☢️ API Functions | Validation 
-    |--------------------------------------------------------------------------
-    |
-    | Here is where api method validate before it's execute
-    |
-    */
+      |--------------------------------------------------------------------------
+      | ☢️ API Functions | Validation 
+      |--------------------------------------------------------------------------
+      |
+      | Here is where api method validate before it's execute
+      |
+      */
     /*
      *-----------------------------------------
      * Verify methods
@@ -591,10 +603,10 @@
     };
 
     /*
-    |--------------------------------------------------------------------------
-    | Validate functions
-    |--------------------------------------------------------------------------
-    */
+      |--------------------------------------------------------------------------
+      | Validate functions
+      |--------------------------------------------------------------------------
+      */
 
     /*
      *-----------------------------------------
@@ -621,23 +633,15 @@
       // Assign fields values to the array
       checkEqual.forEach((element) => {
         // Check if field empty or not
-        if (document.getElementsByName(element)[0].value == "") {
-          let message = null;
-          // If empty - Check is there any custom message for the field empty
-          if (fields != undefined) {
-            message = this.getObjectData(fields, element, "message");
-          }
-          // If custom message not found assign default empty message
-          if (message == "") {
-            message = "required";
-          }
-          // Set error message
-          this.setMessage(document.getElementsByName(element)[0], {
-            message: message,
-            set: setValue,
-          });
+        if (
+          document.body.contains(document.getElementsByName(element)[0]) &&
+          document.getElementsByName(element)[0].value == ""
+        ) {
+          return;
         }
-        checkValues.push(document.getElementsByName(element)[0].value);
+        if (document.body.contains(document.getElementsByName(element)[0])) {
+          checkValues.push(document.getElementsByName(element)[0].value);
+        }
       });
 
       if (!checkValues.includes("")) {
@@ -835,10 +839,10 @@
     };
 
     /*
-    |---------------------------------------------------------------------
-    | Set common attributes
-    |---------------------------------------------------------------------
-    */
+      |---------------------------------------------------------------------
+      | Set common attributes
+      |---------------------------------------------------------------------
+      */
     data.setValidateRule();
     data.redirectWhenValid();
     data.forms ? data.onFocusOut() : null;
