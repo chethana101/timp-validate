@@ -6,6 +6,13 @@
   <p>timp-validate is a library for html form validation written entirely in JavaScript, with zero native dependencies.</p>
 </div>
 
+<p align="center">
+    <img src="https://img.shields.io/npm/dt/timp-validate" alt="Total downloads">
+    <img src="https://img.shields.io/bundlephobia/min/timp-validate" alt="Minified Size">
+    <img src="https://img.shields.io/npm/l/timp-validate" alt="License">
+    <img src="https://img.shields.io/npm/v/timp-validate" alt="Version">
+</p>
+
 ## Installation
 
 To install this package you can use the below npm command.
@@ -280,4 +287,4 @@ Here are the all options Timp Validator is providing,
 
 ## Licence
 
-ISC
+MIT

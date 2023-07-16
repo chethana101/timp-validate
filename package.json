@@ -1,6 +1,6 @@
 {
   "name": "timp-validate",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "HTML form validator",
   "main": "timp-validate.min.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "form"
   ],
   "author": "TigerMP",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/chethana101/timp-validate/issues"
   },
