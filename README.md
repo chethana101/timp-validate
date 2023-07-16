@@ -9,7 +9,7 @@
 <p align="center">
     <img src="https://img.shields.io/npm/dt/timp-validate" alt="Total downloads">
     <img src="https://img.shields.io/bundlephobia/min/timp-validate" alt="Minified Size">
-    <img src="https://img.shields.io/npm/l/timp-validate" alt="License">
+    <img alt="NPM" src="https://img.shields.io/npm/l/timp-validate?color=red">
     <img src="https://img.shields.io/npm/v/timp-validate" alt="Version">
 </p>
 
