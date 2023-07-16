@@ -1,6 +1,6 @@
 {
   "name": "timp-validate",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "HTML form validator",
   "main": "timp-validate.min.js",
   "scripts": {
