@@ -419,10 +419,6 @@
 
       // Add label to the field box
       parent.appendChild(label);
-      // If element exist set foucs
-      if (data.error != 0) {
-        element.focus();
-      }
       // Remove error message if requested
       if (option && option.remove) {
         if (
